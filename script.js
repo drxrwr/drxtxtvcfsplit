@@ -47,9 +47,19 @@ document.getElementById("splitVCFButton").addEventListener("click", async functi
   outputDiv.innerHTML = "";
   const zip = new JSZip();
 
-  // DEFAULT START NUMBER = 1 (only if splitting)
-  let globalCounter = (isNaN(startNumber) || !contactsPerFile) ? 1 : startNumber;
+  // ================================
+  // FIX: GLOBAL COUNTER (tidak reset)
+  // ================================
+  let globalCounter;
+  if (isNaN(startNumber)) {
+    globalCounter = 1;
+  } else {
+    globalCounter = startNumber;
+  }
 
+  // =====================================
+  // LOOP FILE (globalCounter tidak reset!)
+  // =====================================
   for (let fileIndex = 0; fileIndex < results.length; fileIndex++) {
     const fileData = results[fileIndex];
     const originalBase = getBaseName(fileData.name);
